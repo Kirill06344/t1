@@ -41,6 +41,7 @@ int main()
           kuznetsov::point_t point3 = kuznetsov::getPointFromString(line);
           kuznetsov::point_t point4 = kuznetsov::getPointFromString(line);
           shape = std::make_unique< kuznetsov::Complexquad >(point1, point2, point3, point4);
+          shapeStorage.push(std::move(shape));
         } else if (command == "SCALE") {
           kuznetsov::point_t point = kuznetsov::getPointFromString(line);
           double k = std::stod(line.substr(0, line.find(' ')));

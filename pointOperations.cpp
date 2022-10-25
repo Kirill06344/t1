@@ -15,7 +15,7 @@ namespace {
 
 double kuznetsov::getLength(const kuznetsov::point_t& point1, const kuznetsov::point_t& point2)
 {
-  return std::sqrt(std::pow(point1.x_ - point2.x_, 2) + (point1.y_ - point2.y_, 2));
+  return std::sqrt(std::pow(point1.x_ - point2.x_, 2) + std::pow(point1.y_ - point2.y_, 2));
 }
 
 void kuznetsov::movePoint(point_t& point, double x, double y)
