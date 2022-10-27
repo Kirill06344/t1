@@ -2,7 +2,6 @@
 #define CONCAVE_HPP
 
 #include "shape.hpp"
-#include <vector>
 
 namespace kuznetsov {
   class Concave: public Shape {

@@ -3,13 +3,13 @@
 
 #include "pointOperations.hpp"
 #include "shape.hpp"
-#include "storage.hpp"
 
 namespace kuznetsov {
+  using shape_ptr = std::unique_ptr< kuznetsov::Shape >;
   void scale(const point_t& point, double k, std::unique_ptr< Shape >& shape);
-  double getSummaryArea(const Storage< std::unique_ptr< Shape > >& storage);
+  double getSummaryArea(const std::unique_ptr< shape_ptr[] >& shapeStorage, const size_t& size);
   std::pair< point_t, point_t > getCoordinatesOfFrame(const rectangle_t& rectangle);
-  void printCoordinatesOfFrame(const Storage< std::unique_ptr< Shape > >& storage, std::ostream& os);
-  void printShapes(const Storage< std::unique_ptr< Shape > >& storage, std::ostream& os);
+  void printCoordinatesOfFrame(const std::unique_ptr< shape_ptr[] >& shapeStorage, const size_t& size, std::ostream& os);
+  void printShapes(const std::unique_ptr< shape_ptr[] >& shapeStorage, const size_t& size, std::ostream& os);
 }
 #endif

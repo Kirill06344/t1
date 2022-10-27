@@ -15,17 +15,16 @@ void kuznetsov::scale(const point_t& point, double k, std::unique_ptr< Shape >& 
   shape->move(-x * k, -y * k);
 }
 
-double kuznetsov::getSummaryArea(const kuznetsov::Storage< std::unique_ptr< Shape > >& storage)
+double kuznetsov::getSummaryArea(const std::unique_ptr< shape_ptr[] >& shapeStorage, const size_t& size)
 {
   double area = 0.0;
-  for (size_t i = 0; i < storage.getSize(); ++i) {
-    area += storage[i]->getArea();
+  for (size_t i = 0; i < size; ++i) {
+    area += shapeStorage[i]->getArea();
   }
   return area;
 }
 
-std::pair< kuznetsov::point_t, kuznetsov::point_t > kuznetsov::getCoordinatesOfFrame(
-  const kuznetsov::rectangle_t& rectangle)
+std::pair< kuznetsov::point_t, kuznetsov::point_t > kuznetsov::getCoordinatesOfFrame(const kuznetsov::rectangle_t& rectangle)
 {
   point_t center = rectangle.pos_;
   point_t left{center.x_ - rectangle.width_ / 2.0, center.y_ - rectangle.height_ / 2.0};
@@ -33,11 +32,10 @@ std::pair< kuznetsov::point_t, kuznetsov::point_t > kuznetsov::getCoordinatesOfF
   return std::pair< point_t, point_t >(left, right);
 }
 
-void kuznetsov::printCoordinatesOfFrame(const kuznetsov::Storage< std::unique_ptr< Shape > >& storage, std::ostream& os)
+void kuznetsov::printCoordinatesOfFrame(const std::unique_ptr< shape_ptr[] >& shapeStorage, const size_t& size, std::ostream& os)
 {
-  size_t size = storage.getSize();
   for (size_t i = 0; i < size; ++i) {
-    auto pointPair = getCoordinatesOfFrame(storage[i]->getFrameRect());
+    auto pointPair = getCoordinatesOfFrame(shapeStorage[i]->getFrameRect());
     os << pointPair.first << " " << pointPair.second;
     if (i != size - 1) {
       os << " ";
@@ -45,8 +43,8 @@ void kuznetsov::printCoordinatesOfFrame(const kuznetsov::Storage< std::unique_pt
   }
 }
 
-void kuznetsov::printShapes(const kuznetsov::Storage< std::unique_ptr< Shape > >& storage, std::ostream& os)
+void kuznetsov::printShapes(const std::unique_ptr< shape_ptr[] >& shapeStorage, const size_t& size, std::ostream& os)
 {
-  os << kuznetsov::getSummaryArea(storage) << " ";
-  kuznetsov::printCoordinatesOfFrame(storage, os);
+  os << kuznetsov::getSummaryArea(shapeStorage, size) << " ";
+  kuznetsov::printCoordinatesOfFrame(shapeStorage, size, os);
 }

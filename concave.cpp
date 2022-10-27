@@ -8,7 +8,6 @@ namespace {
     double s3 = kuznetsov::getLength(p3, p1);
     return s1 + s2 + s3 > std::max(s1, std::max(s2, s3)) * 2;
   }
-
 }
 
 kuznetsov::Concave::Concave(const point_t& point1, const point_t& point2, const point_t& point3, const point_t& point4):
@@ -66,5 +65,4 @@ void kuznetsov::Concave::doScale(double k)
   point1_ = moveRelatively(point4_, point1_, k);
   point2_ = moveRelatively(point4_, point2_, k);
   point3_ = moveRelatively(point4_, point3_, k);
-
 }
