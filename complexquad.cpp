@@ -40,20 +40,22 @@ kuznetsov::Complexquad::Complexquad(const point_t& point1, const point_t& point2
     throw std::logic_error("Invalid condition to create complexsquad!");
   }
 
+  point_t center;
   try {
-    center_ = getIntersectionPoint(point1, point2, point3, point4);
+    center = getIntersectionPoint(point1, point2, point3, point4);
   } catch (const std::exception& ex) {
     throw std::logic_error("Invalid condition to create complexsquad!");
   }
 
-  if (center_ == point1 || center_ == point2 || center_ == point3 || center_ == point4) {
+  if (center == point1 || center == point2 || center == point3 || center == point4) {
     throw std::logic_error("Invalid condition to create complexsquad!");
   }
 }
 
 double kuznetsov::Complexquad::getArea() const
 {
-  return kuznetsov::getAreaOfTriangle(point1_, point4_, center_) + getAreaOfTriangle(point2_, point3_, center_);
+  point_t center = getIntersectionPoint(point1_, point2_, point3_, point4_);
+  return kuznetsov::getAreaOfTriangle(point1_, point4_, center) + getAreaOfTriangle(point2_, point3_, center);
 }
 
 void kuznetsov::Complexquad::move(double x, double y)
@@ -62,13 +64,13 @@ void kuznetsov::Complexquad::move(double x, double y)
   kuznetsov::movePoint(point2_, x, y);
   kuznetsov::movePoint(point3_, x, y);
   kuznetsov::movePoint(point4_, x, y);
-  kuznetsov::movePoint(center_, x, y);
 }
 
 void kuznetsov::Complexquad::move(const kuznetsov::point_t& point)
 {
-  double x = point.x_ - center_.x_;
-  double y = point.y_ - center_.y_;
+  point_t center = getIntersectionPoint(point1_, point2_, point3_, point4_);
+  double x = point.x_ - center.x_;
+  double y = point.y_ - center.y_;
   move(x, y);
 }
 
@@ -89,8 +91,9 @@ kuznetsov::rectangle_t kuznetsov::Complexquad::getFrameRect() const
 
 void kuznetsov::Complexquad::doScale(double k)
 {
-  point1_ = kuznetsov::moveRelatively(point1_, center_, k);
-  point2_ = kuznetsov::moveRelatively(point2_, center_, k);
-  point3_ = kuznetsov::moveRelatively(point3_, center_, k);
-  point4_ = kuznetsov::moveRelatively(point4_, center_, k);
+  point_t center = getIntersectionPoint(point1_, point2_, point3_, point4_);
+  point1_ = kuznetsov::moveRelatively(point1_, center, k);
+  point2_ = kuznetsov::moveRelatively(point2_, center, k);
+  point3_ = kuznetsov::moveRelatively(point3_, center, k);
+  point4_ = kuznetsov::moveRelatively(point4_, center, k);
 }

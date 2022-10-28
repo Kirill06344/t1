@@ -3,7 +3,7 @@
 #include "shape.hpp"
 
 namespace kuznetsov {
-  class Complexquad : public Shape {
+  class Complexquad: public Shape {
     public:
     Complexquad() = delete;
     Complexquad(const point_t& point1, const point_t& point2, const point_t& point3, const point_t& point4);
@@ -17,7 +17,6 @@ namespace kuznetsov {
     point_t point2_;
     point_t point3_;
     point_t point4_;
-    point_t center_;
   };
 }
 #endif
